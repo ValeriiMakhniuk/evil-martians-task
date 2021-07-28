@@ -1,32 +1,34 @@
 import { FormikErrors } from "formik";
 import * as Yup from "yup";
 import { ERROR_MESSAGES_DELIMETER, initialValues } from "./constants";
-import { ErrorMessages, InitialValues } from "./types";
+import { ErrorMessages, TInitialValues } from "./types";
 
 type ReturnType =
   | void
   | object
-  | Promise<FormikErrors<InitialValues>>
+  | Promise<FormikErrors<TInitialValues>>
   | undefined;
 
 export const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
-    .min(8, "min")
+    .min(8, ErrorMessages.MINIMUM)
     .matches(/[A-Z]/, ErrorMessages.UPPERCASE)
     .matches(/[a-z]/, ErrorMessages.LOWERCASE)
     .matches(/[0-9]/, ErrorMessages.ISNUMBER)
     .matches(/[^A-Za-z0-9]/, ErrorMessages.CONTAINS),
 });
 
-const defaultErrorsObject = Object.keys(initialValues).reduce(
-  (acc, key) => ({ ...acc, [key]: "" }),
-  {}
-);
+const defaultErrorsObject: Record<keyof typeof initialValues, null> | {} =
+  Object.keys(initialValues).reduce(
+    (acc, key) => ({ ...acc, [key]: null }),
+    {}
+  );
 
-export const validate = (values: InitialValues): ReturnType => {
+export const validate = (values: TInitialValues): ReturnType => {
   return validationSchema
     .validate(values, { abortEarly: false })
+    .then(() => null)
     .catch((validationError: Yup.ValidationError) => {
       return validationError.inner.reduce<Record<string, string>>(
         (errAcc, innerError) => {
@@ -41,7 +43,7 @@ export const validate = (values: InitialValues): ReturnType => {
           return {
             ...errAcc,
             [key]: `${errors.join(ERROR_MESSAGES_DELIMETER)}${
-              exists.length > 0 ? `${ERROR_MESSAGES_DELIMETER}${exists}` : ""
+              !!exists ? `${ERROR_MESSAGES_DELIMETER}${exists}` : ""
             }`,
           };
         },
