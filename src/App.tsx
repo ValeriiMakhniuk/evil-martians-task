@@ -17,6 +17,7 @@ function App() {
     validationSchema,
     validate: validate,
     onSubmit: console.log,
+    validateOnMount: true,
   });
 
   React.useEffect(() => {
