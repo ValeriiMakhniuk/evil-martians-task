@@ -1,0 +1,83 @@
+.layout {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 20px;
+  border: solid var(--var-color-border) 1px;
+  border-radius: var(--var-sizing-radius-m);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-bottom: 25px;
+}
+
+.label {
+  align-self: flex-start;
+  font-size: var(--var-sizings-text-m);
+  color: var(--var-color-accent-text);
+  padding: 15px 20% 15px 0;
+  cursor: pointer;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field + .field {
+  margin-top: 25px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: var(--var-sizings-text-m);
+  border: solid var(--var-color-border) 1px;
+  border-radius: var(--var-sizing-radius-s);
+  color: var(--var-color-text-common);
+  /* it's bad i know, focus control by border color */
+  outline: none;
+  transition: border var(--var-transition-duration) var(--var-transition-mode);
+}
+
+.input_type_error {
+  border-color: var(--var-color-error);
+}
+
+.input:focus {
+  border-color: var(--var-color-focus);
+}
+
+.submit {
+  align-self: center;
+  width: 300px;
+  padding: 10px;
+  border: none;
+  border-radius: var(--var-sizing-radius-s);
+  font-size: var(--var-sizings-text-l);
+  background-color: var(--var-color-accent);
+  color: var(--var-color-white);
+  cursor: pointer;
+}
+
+.submit:active {
+  background-color: var(--var-color-accent-active);
+}
+
+.submit:disabled {
+  background-color: var(--var-color-secondary);
+  cursor: not-allowed;
+}
