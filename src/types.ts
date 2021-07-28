@@ -3,9 +3,10 @@ export enum ErrorMessages {
   LOWERCASE = "lowercase",
   ISNUMBER = "number",
   CONTAINS = "conatins",
+  MINIMUM = "min",
 }
 
-export type InitialValues = {
+export type TInitialValues = {
   email: string;
   password: string;
 };
